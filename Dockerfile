@@ -1,7 +1,7 @@
 FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
-    libzip-dev zip unzip git curl
+    zip unzip git curl libzip-dev
 
 RUN docker-php-ext-install pdo pdo_mysql
 
@@ -14,7 +14,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan key:generate
+RUN php artisan config:cache
 
 RUN chown -R www-data:www-data /var/www/html
 
